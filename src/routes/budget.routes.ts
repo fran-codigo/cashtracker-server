@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { BudgetController } from "../controllers/BudgetController";
 
 const router:Router = Router()
 
-router.get('/', (req,res) => {
-    console.log('Desde /ap/budgets')
-})
+router.get('/', BudgetController.getAll)
+router.post('/', BudgetController.create)
 
 export default router
