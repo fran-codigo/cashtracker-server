@@ -52,6 +52,7 @@ router.put(
 router.delete(
   "/:id",
   validateBudgetId,
+  validateBudgetExists,
   handleInputErrors,
   BudgetController.deleteById
 );
