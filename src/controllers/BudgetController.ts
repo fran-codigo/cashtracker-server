@@ -8,4 +8,16 @@ export class BudgetController {
   static create = (req: Request, res: Response) => {
     console.log("Desde POST /app/budgets");
   };
+
+  static getById = (req: Request, res: Response) => {
+    console.log("Desde Show /app/budgets");
+  };
+
+  static updateById = (req: Request, res: Response) => {
+    console.log("Desde Update /app/budgets");
+  };
+
+  static deleteById = (req: Request, res: Response) => {
+    console.log("Desde Delete /app/budgets");
+  };
 }
