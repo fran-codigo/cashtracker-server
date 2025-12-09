@@ -8,7 +8,11 @@ import {
   validateBudgetInput,
 } from "../middleware/budget";
 import { ExpensesController } from "../controllers/ExpenseController";
-import { validateExpenseExists, validateExpenseId, validateExpenseInput } from "../middleware/expense";
+import {
+  validateExpenseExists,
+  validateExpenseId,
+  validateExpenseInput,
+} from "../middleware/expense";
 
 const router: Router = Router();
 
@@ -50,7 +54,14 @@ router.post(
 );
 
 router.get("/:budgetId/expenses/:expenseId", ExpensesController.getById);
-router.put("/:budgetId/expenses/:expenseId", ExpensesController.updateById);
+
+router.put(
+  "/:budgetId/expenses/:expenseId",
+  validateExpenseInput,
+  handleInputErrors,
+  ExpensesController.updateById
+);
+
 router.delete("/:budgetId/expenses/:expenseId", ExpensesController.deleteById);
 
 export default router;
