@@ -8,7 +8,7 @@ import {
   validateBudgetInput,
 } from "../middleware/budget";
 import { ExpensesController } from "../controllers/ExpenseController";
-import { validateExpenseInput } from "../middleware/expense";
+import { validateExpenseId, validateExpenseInput } from "../middleware/expense";
 
 const router: Router = Router();
 
@@ -16,6 +16,8 @@ const router: Router = Router();
 se mande a llamar de inmediato los middlewares*/
 router.param("budgetId", validateBudgetId);
 router.param("budgetId", validateBudgetExists);
+
+router.param("expenseId", validateExpenseId);
 
 router.get("/", BudgetController.getAll);
 

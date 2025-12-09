@@ -1,6 +1,25 @@
 import type { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 
+export const validateExpenseId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  await param("expenseId")
+    .isInt()
+    .withMessage("ID no válido")
+    .custom((value) => value > 0)
+    .withMessage("ID no válido")
+    .run(req);
+
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+};
+
 export const validateExpenseInput = async (
   req: Request,
   res: Response,
