@@ -23,5 +23,9 @@ export class ExpensesController {
     res.json("Se actualizó correctamente");
   };
 
-  static deleteById = async (req: Request, res: Response) => {};
+  static deleteById = async (req: Request, res: Response) => {
+    await req.expense.destroy();
+
+    res.json("Gasto eliminado correctamente");
+  };
 }
