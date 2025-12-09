@@ -8,7 +8,7 @@ import {
   validateBudgetInput,
 } from "../middleware/budget";
 import { ExpensesController } from "../controllers/ExpenseController";
-import { validateExpenseId, validateExpenseInput } from "../middleware/expense";
+import { validateExpenseExists, validateExpenseId, validateExpenseInput } from "../middleware/expense";
 
 const router: Router = Router();
 
@@ -18,6 +18,7 @@ router.param("budgetId", validateBudgetId);
 router.param("budgetId", validateBudgetExists);
 
 router.param("expenseId", validateExpenseId);
+router.param("expenseId", validateExpenseExists);
 
 router.get("/", BudgetController.getAll);
 
