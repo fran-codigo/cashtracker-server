@@ -22,7 +22,7 @@ class User extends Model {
 
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(50),
+    type: DataType.STRING(255),
   })
   declare password: string;
 
