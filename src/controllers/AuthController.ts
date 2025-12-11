@@ -102,4 +102,17 @@ export class AuthController {
 
     res.json("Revisa tu correo para instrucciones");
   };
+
+  static validateToken = async (req: Request, res: Response) => {
+    const { token } = req.body;
+
+    const tokenExists = await User.findOne({ where: { token } });
+
+    if (!tokenExists) {
+      const error = new Error("Token no válido");
+      return res.status(404).json({ error: error.message });
+    }
+
+    res.json("Token válido")
+  };
 }
