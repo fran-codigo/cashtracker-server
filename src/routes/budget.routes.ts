@@ -3,6 +3,7 @@ import { body, param } from "express-validator";
 import { BudgetController } from "../controllers/BudgetController";
 import { handleInputErrors } from "../middleware/validation";
 import {
+  hasAccess,
   validateBudgetExists,
   validateBudgetId,
   validateBudgetInput,
@@ -25,6 +26,7 @@ router.use(authenticate);
 se mande a llamar de inmediato los middlewares*/
 router.param("budgetId", validateBudgetId);
 router.param("budgetId", validateBudgetExists);
+router.param("budgetId", hasAccess);
 
 router.param("expenseId", validateExpenseId);
 router.param("expenseId", validateExpenseExists);
