@@ -13,8 +13,13 @@ import {
   validateExpenseId,
   validateExpenseInput,
 } from "../middleware/expense";
+import { authenticate } from "../middleware/auth";
 
 const router: Router = Router();
+
+/* Esto hace que todas las rutas tengan que usar el middleware 
+para comprobar que el usuario existe */
+router.use(authenticate);
 
 /* Esto hace que en las rutas que se pida budgetId 
 se mande a llamar de inmediato los middlewares*/
