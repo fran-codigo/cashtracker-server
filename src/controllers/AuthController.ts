@@ -134,4 +134,8 @@ export class AuthController {
 
     res.json("La contraseña ha sido actualizada correctamente");
   };
+
+  static user = async (req: Request, res: Response) => {
+    res.json(req.headers.authorization)
+  };
 }
