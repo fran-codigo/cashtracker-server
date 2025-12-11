@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import User from "../models/User";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateToken } from "../utils/token";
@@ -151,7 +151,12 @@ export class AuthController {
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      res.json(decoded);
+      if (typeof decoded === "object" && decoded.id) {
+        const user = await User.findByPk(decoded.id,{
+          attributes: ['id', 'name', 'email']
+        });
+        res.json(user);
+      }
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Token no válido" });
