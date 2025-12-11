@@ -56,9 +56,14 @@ export class AuthController {
 
     if (!user) {
       const error = new Error("Credenciales Inválidas");
-      return res.status(409).json({ error: error.message });
+      return res.status(404).json({ error: error.message });
     }
 
-    res.json(user)
+    if (!user.confirmed) {
+      const error = new Error("La cuenta no ha sido confirmada");
+      return res.status(403).json({ error: error.message });
+    }
+
+    res.json(user);
   };
 }
