@@ -139,8 +139,24 @@ export class AuthController {
     res.json(req.user);
   };
 
-    static updateCurrentUserPassword = async (req: Request, res: Response) => {
-    res.json("desdecurrentuserpass")
+  static updateCurrentUserPassword = async (req: Request, res: Response) => {
+    const { current_password, password } = req.body;
+    const { id } = req.user;
+
+    const user = await User.findByPk(id);
+
+    const isPasswordCorrect = await checkPassword(
+      current_password,
+      user.password
+    );
+    if (!isPasswordCorrect) {
+      const error = new Error("La contraseña actual es incorrecta");
+      return res.status(404).json({ error: error.message });
+    }
+
+    user.password = await hashPassword(password)
+    await user.save()
+
+    res.json("La contraseña se ha actualizado correctamente");
   };
-  
 }
