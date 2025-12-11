@@ -113,6 +113,25 @@ export class AuthController {
       return res.status(404).json({ error: error.message });
     }
 
-    res.json("Token válido")
+    res.json("Token válido");
+  };
+
+  static resetPasswordWithToken = async (req: Request, res: Response) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findOne({ where: { token } });
+
+    if (!user) {
+      const error = new Error("Token no válido");
+      return res.status(404).json({ error: error.message });
+    }
+
+    // Asignar la nueva contraseña
+    user.password = await hashPassword(password);
+    user.token = null;
+    await user.save();
+
+    res.json("La contraseña ha sido actualizada correctamente");
   };
 }
