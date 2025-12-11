@@ -42,14 +42,23 @@ export class AuthController {
       return res.status(401).json({ error: error.message });
     }
 
-    user.confirmed = true
-    user.token = null
-    await user.save()
+    user.confirmed = true;
+    user.token = null;
+    await user.save();
 
     res.json("Cuenta confirmada correctamente");
   };
 
   static login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    // Prevenir duplicados
+    const user = await User.findOne({ where: { email } });
 
-  }
+    if (!user) {
+      const error = new Error("Credenciales Inválidas");
+      return res.status(409).json({ error: error.message });
+    }
+
+    res.json(user)
+  };
 }
