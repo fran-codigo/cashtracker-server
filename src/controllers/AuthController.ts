@@ -12,7 +12,7 @@ export class AuthController {
     const userExists = await User.findOne({ where: { email } });
 
     if (userExists) {
-      const error = new Error("Credenciales Inválidas");
+      const error = new Error("El correo ya está registrado, inicia sesión");
       return res.status(409).json({ error: error.message });
     }
     try {
