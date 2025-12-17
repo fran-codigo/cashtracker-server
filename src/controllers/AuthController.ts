@@ -82,7 +82,7 @@ export class AuthController {
 
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      const error = new Error("Credenciales Inválidas");
+      const error = new Error("El correo no existe, crea una cuenta");
       return res.status(404).json({ error: error.message });
     }
 
@@ -100,7 +100,7 @@ export class AuthController {
       token: user.token,
     });
 
-    res.json("Revisa tu correo para instrucciones");
+    res.json("Revisa tu correo para ver las instrucciones");
   };
 
   static validateToken = async (req: Request, res: Response) => {
