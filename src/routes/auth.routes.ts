@@ -69,6 +69,14 @@ router.post(
 );
 
 router.get("/user", authenticate, AuthController.user);
+router.put(
+  "/user",
+  authenticate,
+  body("name").notEmpty().withMessage("El nombre es obligatorio"),
+  body("email").isEmail().withMessage("El correo no es válido"),
+  handleInputErrors,
+  AuthController.updateProfile
+);
 
 router.post(
   "/update-password",

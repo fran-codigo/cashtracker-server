@@ -139,6 +139,10 @@ export class AuthController {
     res.json(req.user);
   };
 
+  static updateProfile = async (req: Request, res: Response) => {
+    return res.json("Desde updateProfile");
+  };
+
   static updateCurrentUserPassword = async (req: Request, res: Response) => {
     const { current_password, password } = req.body;
     const { id } = req.user;
