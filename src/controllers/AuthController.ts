@@ -143,11 +143,10 @@ export class AuthController {
     const { name, email } = req.body;
     const { id: userId } = req.user;
 
-    const emailExists = await User.findOne({ where: { email } });
-    const user = await User.findByPk(userId);
+    const existsUser = await User.findOne({ where: { email } });
 
-    if (emailExists) {
-      const isSameUser = emailExists.id === userId;
+    if (existsUser) {
+      const isSameUser = existsUser.id === userId;
 
       if (!isSameUser) {
         const error = new Error(
@@ -157,9 +156,9 @@ export class AuthController {
       }
     }
     try {
-      user.name = name;
-      user.email = email;
-      await user.save();
+      existsUser.name = name;
+      existsUser.email = email;
+      await existsUser.save();
 
       res.json("Tu perfil ha sido actualizado correctamente");
     } catch (error) {
