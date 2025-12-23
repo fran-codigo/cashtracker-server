@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { transport } from "../config/nodemailer";
 
 type EmailType = {
