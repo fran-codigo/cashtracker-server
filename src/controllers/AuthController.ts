@@ -140,7 +140,31 @@ export class AuthController {
   };
 
   static updateProfile = async (req: Request, res: Response) => {
-    return res.json("Desde updateProfile");
+    const { name, email } = req.body;
+    const { id: userId } = req.user;
+
+    const emailExists = await User.findOne({ where: { email } });
+    const user = await User.findByPk(userId);
+
+    if (emailExists) {
+      const isSameUser = emailExists.id === userId;
+
+      if (!isSameUser) {
+        const error = new Error(
+          "El correo ya está registrado, ingresea otro correo"
+        );
+        return res.status(409).json({ error: error.message });
+      }
+    }
+    try {
+      user.name = name;
+      user.email = email;
+      await user.save();
+
+      res.json("Tu perfil ha sido actualizado correctamente");
+    } catch (error) {
+      res.status(500).json({ error: "Hubo un error" });
+    }
   };
 
   static updateCurrentUserPassword = async (req: Request, res: Response) => {
